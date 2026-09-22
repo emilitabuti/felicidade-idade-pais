@@ -10,7 +10,7 @@ população, área).
 | | Nome | Usuário no GitHub |
 | --- | --- | --- |
 | Integrante 1 | Emili Vieira Tabuti | emilitabuti |
-| Integrante 2 | *(preencha)* | *(preencha)* |
+| Integrante 2 | Isabela Groke Gomes | Isa252 |
 
 ## Como rodar
 
@@ -18,23 +18,15 @@ população, área).
 - `pip install -r requirements.txt`
 - Abrir `PUCSP_CS_AI_10_AI_ML_Happines.ipynb` e rodar **Kernel → Restart & Run All**.
 
-A pasta `cantril-ladder-age-groups/` está incluída no repositório porque `lab_helpers.load_owid_age()`
-usa o CSV dela como cópia local de fallback quando a OWID bloqueia downloads automatizados (HTTP 403,
-algo observado várias vezes durante o desenvolvimento) — sem ela, o notebook pode falhar ao rodar do
-zero caso a fonte esteja bloqueada no momento da correção.
+A pasta `cantril-ladder-age-groups/` contém uma cópia local dos dados usados pelo notebook. Ela serve como alternativa caso o download direto da fonte não esteja disponível no momento da execução.
 
 ## Resultados principais
 
-- **Regressão linear:** a idade sozinha quase não explica a nota bruta entre países (R² ≈ 0,02),
-  mas explicar a riqueza (log PIB per capita, log população, log área) eleva o R² para ≈ 0,63.
-  Olhando o desvio *dentro* de cada país, a idade já explica bem mais (R² ≈ 0,32–0,37) e o modelo
-  quadrático (M2) supera a reta (M1) — a curva em U aparece, com mínimo estimado perto dos 63 anos.
-- **Regressão logística:** classificando grupos como "feliz" (acima da mediana), o modelo atinge
-  acurácia ≈ 0,80 e AUC ≈ 0,90 em países nunca vistos. Comparando divisão por país com divisão
-  aleatória em 20 sementes, o `RandomForestClassifier` mostrou um AUC bem maior na divisão aleatória
-  (vazamento de informação entre faixas etárias do mesmo país), enquanto a regressão logística foi
-  mais estável entre as duas divisões.
-- Ver as figuras e a discussão completa no notebook (Seções 7 a 9).
+- **Regressão linear:** a idade sozinha explica muito pouco da nota bruta de felicidade entre os países (R² ≈ 0,02). Ao acrescentar PIB per capita, população e área, o R² sobe para aproximadamente 0,63. Dentro dos países, a idade explica uma parcela maior da variação (R² ≈ 0,32–0,37), e o modelo quadrático apresenta ajuste melhor que o modelo linear. No modelo M3, o ponto mínimo estimado da curva ficou próximo de 63 anos.
+
+- **Regressão logística:** usando a mediana como limite para classificar um grupo como “feliz”, o modelo obteve acurácia ≈ 0,80 e AUC ≈ 0,90 em países não vistos. Na comparação entre divisão por país e divisão aleatória, a regressão logística apresentou resultados semelhantes, enquanto o `RandomForestClassifier` teve desempenho maior na divisão aleatória, indicando possível vazamento de informação entre faixas etárias do mesmo país.
+
+- As figuras e a discussão completa estão nas Seções 7 a 9 do notebook.
 
 ## Limitações
 

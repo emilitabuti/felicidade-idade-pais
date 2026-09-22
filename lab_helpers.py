@@ -10,17 +10,15 @@ import numpy as np
 import pandas as pd
 import requests
 
-# --- Dados de idade (Our World in Data) ------------------------------------
-
+# dados de idade (Our World in Data) 
 OWID_AGE_URL = (
     "https://ourworldindata.org/grapher/cantril-ladder-age-groups.csv"
     "?v=1&csvType=full&useColumnShortNames=true"
 )
-# Cópia local baixada em aula, usada se o download acima falhar (offline).
+# cópia local usada caso o download da OWID falhe
 _LOCAL_OWID_CSV = Path(__file__).parent / "cantril-ladder-age-groups" / "cantril-ladder-age-groups.csv"
 
-# A OWID publica tanto com nomes "curtos" (useColumnShortNames=true) quanto
-# com os rótulos completos; normalizamos os dois para os mesmos 4 rótulos.
+# padroniza os nomes das quatro faixas etárias
 _AGE_COLUMN_LABELS = {
     "cantril_ladder_score__age_group_up_to_29_years": "Up to 29 years",
     "cantril_ladder_score__age_group_30_44_years": "30-44 years",
@@ -28,8 +26,8 @@ _AGE_COLUMN_LABELS = {
     "cantril_ladder_score__age_group_60plus_years": "60+ years",
 }
 
-# Ponto médio de cada faixa etária (anos). "60+ years" não tem limite superior
-# real, então 70 é uma suposição — testem 65 como checagem de robustez.
+# pontos médios utilizados para representar cada faixa etária.
+# para "60+ years", 70 anos é uma aproximação.
 AGE_MID = {
     "Up to 29 years": 22,
     "30-44 years": 37,
@@ -39,11 +37,8 @@ AGE_MID = {
 
 
 def load_owid_age(url: str = OWID_AGE_URL, local_fallback: Path = _LOCAL_OWID_CSV) -> pd.DataFrame:
-    """Baixa o CSV da OWID e devolve em formato longo: uma linha por país e faixa etária.
+    """carrega os dados da OWID em formato longo, com uma linha por país e faixa etária"""
 
-    Colunas: country, iso3, year, age_group, ladder_mean, window.
-    Descarta linhas sem código ISO3 (agregados regionais como "World").
-    """
     try:
         raw = pd.read_csv(url)
     except Exception as exc:  # rede indisponível, URL mudou, etc.
@@ -57,27 +52,24 @@ def load_owid_age(url: str = OWID_AGE_URL, local_fallback: Path = _LOCAL_OWID_CS
     long_df = raw.melt(id_vars=id_vars, value_vars=value_vars, var_name="age_group", value_name="ladder_mean")
     long_df = long_df.rename(columns={"Entity": "country", "Code": "iso3", "Year": "year"})
     long_df = long_df.dropna(subset=["iso3", "ladder_mean"])
-    # códigos de agregados regionais da OWID (ex.: "OWID_WRL") têm mais de 3 letras
+    # mantém apenas códigos ISO3 de três letras
     long_df = long_df[long_df["iso3"].str.len() == 3]
 
     long_df["window"] = "2021-2023"
     return long_df.reset_index(drop=True)
 
 
-# --- Enriquecimento com dados do Banco Mundial ------------------------------
-
+# dados do Banco Mundial
 WB_API_BASE = "https://api.worldbank.org/v2"
 
-# Troquem/acrescentem indicadores aqui para enriquecer o dataset (Seção 6).
 WB_INDICATORS = {
     "gdp_pc": "NY.GDP.PCAP.PP.KD",
     "pop": "SP.POP.TOTL",
     "area_km2": "AG.LND.TOTL.K2",
 }
 
-
 def _get_valid_country_iso3() -> set:
-    """Códigos ISO3 de países reais, excluindo agregados regionais (ex.: "World", "Arab World")."""
+    """retorna códigos ISO3 de países, excluindo agregados regionais"""
     resp = requests.get(f"{WB_API_BASE}/country", params={"format": "json", "per_page": 400}, timeout=30)
     resp.raise_for_status()
     _, records = resp.json()
@@ -89,10 +81,8 @@ def _get_valid_country_iso3() -> set:
 
 
 def fetch_wb(indicator_code: str, start_year: int = 2019, end_year: int = 2023) -> pd.Series:
-    """Busca um indicador do Banco Mundial; devolve o último valor não faltante por país (2019-2023 por padrão).
+    """busca um indicador e retorna o último valor disponível por país na janela informada"""
 
-    Série indexada por `iso3`, com o nome igual ao código do indicador.
-    """
     valid_iso3 = _get_valid_country_iso3()
     resp = requests.get(
         f"{WB_API_BASE}/country/all/indicator/{indicator_code}",
@@ -112,17 +102,14 @@ def fetch_wb(indicator_code: str, start_year: int = 2019, end_year: int = 2023) 
         raise ValueError(f"Nenhum dado retornado pelo Banco Mundial para o indicador {indicator_code}")
 
     df = pd.DataFrame(rows).sort_values("year")
-    latest = df.groupby("iso3")["value"].last()  # último valor não faltante na janela
+    latest = df.groupby("iso3")["value"].last()
     latest.name = indicator_code
     latest.index.name = "iso3"
     return latest
 
 
 def build_country_table(start_year: int = 2019, end_year: int = 2023) -> pd.DataFrame:
-    """Monta a tabela de países com PIB per capita, população e área (colunas de WB_INDICATORS).
-
-    Descarta agregados regionais. Devolve colunas: iso3, country, gdp_pc, pop, area_km2.
-    """
+    """Monta a tabela com PIB per capita, população e área de cada país."""
     resp = requests.get(f"{WB_API_BASE}/country", params={"format": "json", "per_page": 400}, timeout=30)
     resp.raise_for_status()
     _, country_records = resp.json()
@@ -142,10 +129,10 @@ def build_country_table(start_year: int = 2019, end_year: int = 2023) -> pd.Data
     return table[["iso3", "country", *WB_INDICATORS.keys()]].reset_index(drop=True)
 
 
-# --- Conversão de nomes de país para ISO3 -----------------------------------
+# conversão de nomes de países
 
 def to_iso3(names: pd.Series) -> pd.Series:
-    """Converte uma coluna de nomes de país para códigos ISO3, imprimindo os nomes sem correspondência."""
+    """converte nomes de países para códigos ISO3 e informa nomes sem correspondência"""
     import country_converter as coco
 
     names = pd.Series(names)
@@ -156,19 +143,16 @@ def to_iso3(names: pd.Series) -> pd.Series:
     return iso3
 
 
-# --- Plano B: dados simulados (offline) -------------------------------------
+# dados simulados para uso offline
 
 def make_synthetic_age_data(country_table: pd.DataFrame, seed: int = 42) -> pd.DataFrame:
-    """Simula ladder_mean por faixa etária a partir do PIB real, com curva em U e ruído.
-
-    Todas as linhas trazem `synthetic=True`; nunca reportem estes números como fatos do mundo real.
-    """
+    """gera dados simulados de felicidade por faixa etária para uso alternativo offline"""
     rng = np.random.default_rng(seed)
     rows = []
     for _, row in country_table.iterrows():
-        base = 2.5 + 0.55 * np.log(row["gdp_pc"])  # países mais ricos partem de uma base mais alta
+        base = 2.5 + 0.55 * np.log(row["gdp_pc"])
         for age_group, age_mid in AGE_MID.items():
-            u_shape = 0.0035 * (age_mid - 45) ** 2  # curva em U plantada, com mínimo perto dos 45 anos
+            u_shape = 0.0035 * (age_mid - 45) ** 2
             noise = rng.normal(0, 0.15)
             ladder_mean = float(np.clip(base + u_shape + noise, 0, 10))
             rows.append(
