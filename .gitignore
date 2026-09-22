@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+WHR26_Data_Figure_2.1.xlsx
+# arquivos de apoio/planejamento, fora do escopo pedido pelo professor
+PLANO_ENTREGA.md
+Happiness-Around-the-World-Data.csv

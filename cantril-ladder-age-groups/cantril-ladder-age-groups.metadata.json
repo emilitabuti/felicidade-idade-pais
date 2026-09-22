@@ -1,0 +1,90 @@
+{
+  "chart": {
+    "title": "Self-reported life satisfaction by age",
+    "subtitle": "Average of survey responses for life satisfaction within age groups. The survey question asks respondents their current possition on a hypothetical ladder, where the best possible life for them is a 10, and the worst possible life is a 0.",
+    "citation": "Gallup World Poll via the World Happiness Report (2024)",
+    "originalChartUrl": "https://ourworldindata.org/grapher/cantril-ladder-age-groups?v=1&csvType=full&useColumnShortNames=false",
+    "selection": [
+      "Lithuania",
+      "Israel",
+      "Serbia",
+      "Iceland",
+      "Denmark",
+      "Luxembourg",
+      "Finland",
+      "Romania"
+    ]
+  },
+  "columns": {
+    "Cantril ladder score for people aged up to 29 years": {
+      "titleShort": "Self-reported life satisfaction (up to 29 years)",
+      "titleLong": "Self-reported life satisfaction (up to 29 years)",
+      "descriptionShort": "Average of survey responses for people aged up to 29 years. The survey question asks respondents their current position on a hypothetical ladder, where the best possible life for them is a 10, and the worst possible life is a 0.",
+      "descriptionKey": "- The Cantril ladder asks respondents to think of a ladder, with the best possible life for them being a 10 and the worst possible life being a 0. They are then asked to rate their own current lives on that 0 to 10 scale.\n- The rankings are three-year averages, calculated by the World Happiness Report based on nationally representative samples collected by the Gallup World Poll. This data is averaged over the responses from 2021 to 2023.\n- The number of people and countries surveyed varies year to year, but typically more than 100,000 people in 130 countries participate in the Gallup World Poll each year.\n- The rankings are based entirely on the survey scores, using the Gallup weights to make the estimates representative.",
+      "descriptionProcessing": "Average of regions is calculated by taking a population-weighted average over all countries within that region.",
+      "shortUnit": "",
+      "unit": "",
+      "timespan": "2023-2023",
+      "type": "Numeric",
+      "owidVariableId": 1025670,
+      "shortName": "cantril_ladder_score__age_group_up_to_29_years",
+      "lastUpdated": "2025-04-01",
+      "citationShort": "Gallup World Poll via the World Happiness Report (2024) – processed by Our World in Data",
+      "citationLong": "Gallup World Poll via the World Happiness Report (2024) – processed by Our World in Data. “Self-reported life satisfaction (up to 29 years)” [dataset]. Gallup World Poll via the World Happiness Report, “World Happiness Report 2024” [original data].",
+      "fullMetadata": "https://api.ourworldindata.org/v1/indicators/1025670.metadata.json"
+    },
+    "Cantril ladder score for people aged 30-44 years": {
+      "titleShort": "Self-reported life satisfaction (30-44 years)",
+      "titleLong": "Self-reported life satisfaction (30-44 years)",
+      "descriptionShort": "Average of survey responses for people aged 30-44 years. The survey question asks respondents their current position on a hypothetical ladder, where the best possible life for them is a 10, and the worst possible life is a 0.",
+      "descriptionKey": "- The Cantril ladder asks respondents to think of a ladder, with the best possible life for them being a 10 and the worst possible life being a 0. They are then asked to rate their own current lives on that 0 to 10 scale.\n- The rankings are three-year averages, calculated by the World Happiness Report based on nationally representative samples collected by the Gallup World Poll. This data is averaged over the responses from 2021 to 2023.\n- The number of people and countries surveyed varies year to year, but typically more than 100,000 people in 130 countries participate in the Gallup World Poll each year.\n- The rankings are based entirely on the survey scores, using the Gallup weights to make the estimates representative.",
+      "descriptionProcessing": "Average of regions is calculated by taking a population-weighted average over all countries within that region.",
+      "shortUnit": "",
+      "unit": "",
+      "timespan": "2023-2023",
+      "type": "Numeric",
+      "owidVariableId": 1025666,
+      "shortName": "cantril_ladder_score__age_group_30_44_years",
+      "lastUpdated": "2025-04-01",
+      "citationShort": "Gallup World Poll via the World Happiness Report (2024) – processed by Our World in Data",
+      "citationLong": "Gallup World Poll via the World Happiness Report (2024) – processed by Our World in Data. “Self-reported life satisfaction (30-44 years)” [dataset]. Gallup World Poll via the World Happiness Report, “World Happiness Report 2024” [original data].",
+      "fullMetadata": "https://api.ourworldindata.org/v1/indicators/1025666.metadata.json"
+    },
+    "Cantril ladder score for people aged 45-59 years": {
+      "titleShort": "Self-reported life satisfaction (45-59 years)",
+      "titleLong": "Self-reported life satisfaction (45-59 years)",
+      "descriptionShort": "Average of survey responses for people aged 45-59 years. The survey question asks respondents their current position on a hypothetical ladder, where the best possible life for them is a 10, and the worst possible life is a 0.",
+      "descriptionKey": "- The Cantril ladder asks respondents to think of a ladder, with the best possible life for them being a 10 and the worst possible life being a 0. They are then asked to rate their own current lives on that 0 to 10 scale.\n- The rankings are three-year averages, calculated by the World Happiness Report based on nationally representative samples collected by the Gallup World Poll. This data is averaged over the responses from 2021 to 2023.\n- The number of people and countries surveyed varies year to year, but typically more than 100,000 people in 130 countries participate in the Gallup World Poll each year.\n- The rankings are based entirely on the survey scores, using the Gallup weights to make the estimates representative.",
+      "descriptionProcessing": "Average of regions is calculated by taking a population-weighted average over all countries within that region.",
+      "shortUnit": "",
+      "unit": "",
+      "timespan": "2023-2023",
+      "type": "Numeric",
+      "owidVariableId": 1025668,
+      "shortName": "cantril_ladder_score__age_group_45_59_years",
+      "lastUpdated": "2025-04-01",
+      "citationShort": "Gallup World Poll via the World Happiness Report (2024) – processed by Our World in Data",
+      "citationLong": "Gallup World Poll via the World Happiness Report (2024) – processed by Our World in Data. “Self-reported life satisfaction (45-59 years)” [dataset]. Gallup World Poll via the World Happiness Report, “World Happiness Report 2024” [original data].",
+      "fullMetadata": "https://api.ourworldindata.org/v1/indicators/1025668.metadata.json"
+    },
+    "Cantril ladder score for people aged 60+ years": {
+      "titleShort": "Self-reported life satisfaction (60+ years)",
+      "titleLong": "Self-reported life satisfaction (60+ years)",
+      "descriptionShort": "Average of survey responses for people aged 60+ years. The survey question asks respondents their current position on a hypothetical ladder, where the best possible life for them is a 10, and the worst possible life is a 0.",
+      "descriptionKey": "- The Cantril ladder asks respondents to think of a ladder, with the best possible life for them being a 10 and the worst possible life being a 0. They are then asked to rate their own current lives on that 0 to 10 scale.\n- The rankings are three-year averages, calculated by the World Happiness Report based on nationally representative samples collected by the Gallup World Poll. This data is averaged over the responses from 2021 to 2023.\n- The number of people and countries surveyed varies year to year, but typically more than 100,000 people in 130 countries participate in the Gallup World Poll each year.\n- The rankings are based entirely on the survey scores, using the Gallup weights to make the estimates representative.",
+      "descriptionProcessing": "Average of regions is calculated by taking a population-weighted average over all countries within that region.",
+      "shortUnit": "",
+      "unit": "",
+      "timespan": "2023-2023",
+      "type": "Numeric",
+      "owidVariableId": 1025669,
+      "shortName": "cantril_ladder_score__age_group_60plus_years",
+      "lastUpdated": "2025-04-01",
+      "citationShort": "Gallup World Poll via the World Happiness Report (2024) – processed by Our World in Data",
+      "citationLong": "Gallup World Poll via the World Happiness Report (2024) – processed by Our World in Data. “Self-reported life satisfaction (60+ years)” [dataset]. Gallup World Poll via the World Happiness Report, “World Happiness Report 2024” [original data].",
+      "fullMetadata": "https://api.ourworldindata.org/v1/indicators/1025669.metadata.json"
+    }
+  },
+  "dateDownloaded": "2026-09-20",
+  "activeFilters": {}
+}
